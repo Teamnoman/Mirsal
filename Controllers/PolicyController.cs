@@ -13,7 +13,7 @@ namespace MIRSAL.Controllers
         [HttpGet("GetPolicyVehicleByCustomer")]
         public async Task<IActionResult> GetPolicyVehicleByCustomer(string customerId)
         {
-            var PolicyVehicleList = await policyBL.GetPolicyVehicle(customerId);
+            var PolicyVehicleList = await policyBL.GetPolicyVehicles(customerId);
 
             if (PolicyVehicleList != null)
             {

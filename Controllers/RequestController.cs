@@ -28,7 +28,7 @@ namespace MIRSAL.Controllers
         [HttpGet("GetAllRequests")]
         public async Task<IActionResult> GetAllRequests()
         {
-            var RequestList = await _requestService.GetAllAsync();
+            var RequestList = await requestBL.GetAllRequests();
 
             if (RequestList != null)
             {

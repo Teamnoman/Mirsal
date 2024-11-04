@@ -1,3 +1,4 @@
+using MIRSAL.Common;
 using MIRSAL.DTO;
 using MIRSAL.Models;
 using MIRSAL.Services;
@@ -10,6 +11,10 @@ namespace MIRSAL.BusinessLogic
         public readonly RequestService _requestService;
         public readonly VehicleService _vehicleService;
         public readonly CustomerService _customerService;
+        public readonly string[] VideoUrls = {
+            "https://drive.google.com/file/d/1gpIzjHP_o0Lv4luP9dHJVA_FoaJ6SLKJ/view?usp=sharing",
+            "https://drive.google.com/file/d/1GQfLBSLugTUP-VrloP1l6iUxgGkrE7gz/view?usp=sharing"
+        };
 
         public RequestBL(PolicyService policyService, RequestService requestService, 
                             VehicleService vehicleService, CustomerService customerService){
@@ -23,6 +28,7 @@ namespace MIRSAL.BusinessLogic
             if(!await _policyService.IsValidPolicyAndCustomer(request.CustomerID, request.PolicyID)) {
                 return null;
             }
+            Random random = new Random();
             var newRequest = new Request {
                 CustomerID = request.CustomerID,
                 PolicyID = request.PolicyID,
@@ -31,6 +37,8 @@ namespace MIRSAL.BusinessLogic
                 IncidentEndTime = request.IncidentEndTime,
                 IncidentDate = request.IncidentDate,
                 Description = request.Description,
+                Status = RequestStatus.Pending,
+                FootageUrl = VideoUrls[random.Next(1,3)],
                 CreatedDateTime = DateTime.Now,
             };
             await _requestService.CreateAsync(newRequest);
@@ -44,6 +52,8 @@ namespace MIRSAL.BusinessLogic
             if(request == null) {
                 return null;
             }
+            request.Status = request.Status ?? RequestStatus.Pending;
+            request.FootageUrl = "";
             
             var policy = await _policyService.GetAsync(request.PolicyID);
             if(policy == null) {
@@ -66,6 +76,20 @@ namespace MIRSAL.BusinessLogic
                 PolicyInfo = policy,
                 VehicleInfo = vehicle
             };
-        }  
+        }
+
+        public async Task<List<DashboardDto>> GetAllRequests()
+        {
+            List<DashboardDto> RequestsList = new List<DashboardDto>();
+            var requests = await _requestService.GetAllAsync();
+            foreach(var request in requests){
+                var details = await GetDashboardData(request.Id);
+                if(details != null)
+                {
+                    RequestsList.Add(details);
+                }
+            }
+            return RequestsList;
+        }
     }
 }
