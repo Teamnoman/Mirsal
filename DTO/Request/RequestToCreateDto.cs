@@ -7,6 +7,7 @@ namespace MIRSAL.DTO
         public string Location { get; set; } = null!;
         public string IncidentStartTime { get; set; } = null!;
         public string IncidentEndTime { get; set; } = null!;
+        public string Description {get; set; } = null!; 
         public DateTime IncidentDate { get; set; }
     }
 }

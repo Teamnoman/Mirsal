@@ -109,3 +109,4 @@
 /Users/nomanarif/Desktop/Personal/Personal work/MIRSAL/obj/Debug/net8.0/backend.pdb
 /Users/nomanarif/Desktop/Personal/Personal work/MIRSAL/obj/Debug/net8.0/backend.genruntimeconfig.cache
 /Users/nomanarif/Desktop/Personal/Personal work/MIRSAL/obj/Debug/net8.0/ref/backend.dll
+/Users/nomanarif/Desktop/Personal/Personal work/MIRSAL/obj/Debug/net8.0/backend.sourcelink.json

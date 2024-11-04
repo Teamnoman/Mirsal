@@ -30,6 +30,7 @@ namespace MIRSAL.BusinessLogic
                 IncidentStartTime = request.IncidentStartTime,
                 IncidentEndTime = request.IncidentEndTime,
                 IncidentDate = request.IncidentDate,
+                Description = request.Description,
                 CreatedDateTime = DateTime.Now,
             };
             await _requestService.CreateAsync(newRequest);

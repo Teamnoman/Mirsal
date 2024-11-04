@@ -28,6 +28,9 @@ namespace MIRSAL.Services
         public async Task RemoveAsync(string id) =>
             await _PolicyModel.DeleteOneAsync(item => item.Id == id);
 
+        public async Task<List<Policy>> GetPolicyByCustomer(string customerId) => 
+            await _PolicyModel.Find(item => item.CustomerID == customerId).ToListAsync();
+
         public async Task<bool> IsValidPolicyAndCustomer(string customerId, string policyNumber) =>
             await _PolicyModel.Find(item => item.Id == policyNumber && item.CustomerID == customerId).AnyAsync();
     }
