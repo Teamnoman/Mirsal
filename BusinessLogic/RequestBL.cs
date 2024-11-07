@@ -53,7 +53,7 @@ namespace MIRSAL.BusinessLogic
                 return null;
             }
             request.Status = request.Status ?? RequestStatus.Pending;
-            request.FootageUrl = "";
+            request.FootageUrl = request.FootageUrl ?? "https://drive.google.com/file/d/1gpIzjHP_o0Lv4luP9dHJVA_FoaJ6SLKJ/view?usp=drive_link";
             
             var policy = await _policyService.GetAsync(request.PolicyID);
             if(policy == null) {
