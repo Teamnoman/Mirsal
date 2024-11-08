@@ -38,7 +38,7 @@ namespace MIRSAL.BusinessLogic
                 IncidentDate = request.IncidentDate,
                 Description = request.Description,
                 Status = RequestStatus.Pending,
-                FootageUrl = VideoUrls[random.Next(1,3)],
+                FootageUrl = VideoUrls[random.Next(0,2)],
                 CreatedDateTime = DateTime.Now,
             };
             await _requestService.CreateAsync(newRequest);
