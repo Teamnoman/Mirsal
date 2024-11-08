@@ -13,5 +13,6 @@ namespace MIRSAL.Models
         public int Year { get; set; }
         public string ChassisNumber { get; set; } = null!;
         public string RegistrationNumber { get; set; } = null!;
+        public string Image { get; set; } = null!;
     }
 }
