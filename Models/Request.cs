@@ -1,3 +1,4 @@
+using MIRSAL.DTO;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -16,6 +17,7 @@ namespace MIRSAL.Models
         public string Description { get; set; } = null!;
         public string FootageUrl { get; set; } = null!;
         public string Status { get; set; } = null!;
+        public RequestPath RequestPath {get; set;} = null!;
         public DateTime IncidentDate { get; set; }
         public DateTime CreatedDateTime { get; set; }
     }

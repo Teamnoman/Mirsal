@@ -40,6 +40,7 @@ namespace MIRSAL.BusinessLogic
                 Status = RequestStatus.Pending,
                 FootageUrl = VideoUrls[random.Next(0,2)],
                 CreatedDateTime = DateTime.Now,
+                RequestPath = CreateRequestPath()
             };
             await _requestService.CreateAsync(newRequest);
             return newRequest;
@@ -90,6 +91,56 @@ namespace MIRSAL.BusinessLogic
                 }
             }
             return RequestsList;
+        }
+
+       private static Random random = new Random();
+
+        public static Coordinates GeneratePoint(double minLat, double maxLat, double minLon, double maxLon)
+        {
+            double latitude = Math.Round(minLat + (random.NextDouble() * (maxLat - minLat)), 6);
+            double longitude = Math.Round(minLon + (random.NextDouble() * (maxLon - minLon)), 6);
+
+            return new Coordinates{
+                Latitude = latitude,
+                Longitude = longitude
+            };
+        }
+        private static Coordinates GenerateIntermediatePoint(Coordinates start, Coordinates end)
+        {
+            // Generate a point closer to the mid-range of the start and end
+            double latitude = Math.Round((start.Latitude + end.Latitude) / 2 + random.NextDouble() - 0.5, 6);
+            double longitude = Math.Round((start.Longitude + end.Longitude) / 2 + random.NextDouble() - 0.5, 6);
+
+            return new Coordinates{
+                Latitude = latitude,
+                Longitude = longitude
+            };
+        }
+
+        public static RequestPath CreateRequestPath()
+        {
+            // Define boundaries for Saudi Arabia
+            double minLat = 16.5, maxLat = 32.2;
+            double minLon = 34.5, maxLon = 55.7;
+
+            // Step 1: Generate Start and End points
+            var startPoint = GeneratePoint(minLat, maxLat, minLon, maxLon);
+            var endPoint = GeneratePoint(minLat, maxLat, minLon, maxLon);
+
+            // Step 2: Generate Intermediate points (somewhere in between start and end)
+            var midPoint1 = GenerateIntermediatePoint(startPoint, endPoint);
+            var midPoint2 = GenerateIntermediatePoint(startPoint, endPoint);
+
+            var requestPath = new RequestPath()
+            {
+                StartPoint = startPoint,
+                MiddlePoints = new List<Coordinates> {
+                    midPoint1,midPoint2
+                },
+                EndPoint = endPoint
+            };
+
+            return requestPath;
         }
     }
 }
